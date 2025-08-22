@@ -1,0 +1,42 @@
+services:
+  mongo:
+    image: mongo:latest
+    container_name: mongo
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+  backend:
+    build:
+      context: ./backend-climadata
+      dockerfile: Dockerfile
+    container_name: nest-backend
+    restart: always
+    depends_on:
+      - mongo
+    ports:
+      - "3000:3000"
+    environment:
+      - MONGO_URI=mongodb://mongo:27017/nest
+    volumes:
+      - ./backend-climadata:/app
+    command: npm run start
+
+  frontend:
+    build:
+      context: ./frontend-climadata
+      dockerfile: Dockerfile
+    container_name: angular-frontend
+    restart: always
+    depends_on:
+      - backend
+    ports:
+      - "4200:4200"
+    volumes:
+      - ./frontend-climadata:/app
+    command: npm run start
+
+volumes:
+  mongo_data:

@@ -1,0 +1,127 @@
+<div class="sm:h-auto xl:h-screen flex flex-col xl:flex-row p-4 mx-auto">
+  <div>
+    <div class="flex sm:flex-row sm:items-center flex-col mt-4 justify-stretch">
+      <button matButton="filled" class="sm:w-96" (click)="togglePositionBbox()">filtrar cerca de ti</button>
+      <button matButton="filled" class="sm:w-96 sm:ml-5 sm:mt-0 mt-5" (click)="togglePositionDefault()">mostrar
+        todos</button>
+    </div>
+    @defer {
+    <div class="flex sm:flex-row sm:items-center flex-col mt-4 justify-stretch">
+      <mat-form-field class="sm:w-96">
+        <mat-label>Selecciona una ubicación</mat-label>
+        <mat-select [(ngModel)]="selectedId" (selectionChange)="onSelectId($event.value)">
+          <mat-option [value]="null">Ninguno</mat-option>
+          @if(!isPosition()){
+          @for (elem of elemts(); track elem.id) {
+          <mat-option [value]="elem.id">{{ elem.locality }} - {{ elem.name }}</mat-option>
+          }
+          } @else {
+          @for (elem of localElemts(); track elem.id) {
+          <mat-option [value]="elem.id">{{ elem.locality }} - {{ elem.name }}</mat-option>
+          }
+          }
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field class="sm:ml-5 sm:w-96">
+        <mat-label>Buscar lugar</mat-label>
+        <input type="text" matInput placeholder="Buscar" [matAutocomplete]="auto" [(ngModel)]="inputValue"
+          (input)="filter()" />
+
+        <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onSelectId($event.option.value)">
+          @for (e of filteredRes; track e.id) {
+          <mat-option [value]="e.id">
+            {{ e.locality }} - {{ e.name }}
+          </mat-option>
+          }
+        </mat-autocomplete>
+      </mat-form-field>
+    </div>
+    }
+    @loading (minimum 300ms) {
+    <app-loading></app-loading>
+    }
+    @error{
+    <p>error</p>
+    }
+
+
+
+
+    <div class="p-4 rounded-lg fondo_leyenda shadow-sm">
+      @defer (when selectedId() !==null) {
+      <h2 class="text-lg font-semibold mb-2">Parámetros de Calidad del Aire en {{"[WIP]"}}</h2>
+      <div class="flex flex-col gap-8">
+        @for (param of parameters(); track param.id) {
+        <div>
+          {{param.name}} / {{param.units}} - {{param.value}}
+        </div>
+        }
+      </div>
+      }
+      @loading (minimum 500ms) {
+      <ngx-skeleton-loader count="5" appearance="line" size="100px" [theme]="{height: '50px', background: 'black'}" />
+      }
+      @placeholder {
+      <p class="h-auto sm:h-32 flex justify-center items-center text-gray-200">selecciona una localidad para empezar</p>
+      }
+    </div>
+  </div>
+  <!-- el ejercicio -->
+  <div class="flex sm:flex-col flex-col-reverse">
+    @defer ( when selectedId() !== null){
+    <div class="rounded-lg fondo_leyenda shadow-sm p-2 mt-5 xl:mx-5">
+      <h3 class="text-lg font-semibold mb-2">Leyenda de Parámetros</h3>
+      <ul class="space-y-1 text-sm">
+        @for (e of leyendaElements(); track e.name) {
+        <li>
+          <strong>{{e.displayName}}: </strong>
+          <em>{{e.info}}</em>
+          • Bajo: &lt; {{e.riskLevel.low}} {{e.unit}} — Moderado: {{e.riskLevel.moderate}} {{e.unit}} — Alto: &gt;
+          {{e.riskLevel.high}} {{e.unit}} <p class="text-red-600">{{e.riskLevel.riskDescription}}</p>
+        </li>
+        }
+      </ul>
+    </div>
+    }
+    @loading (minimum 500ms) {
+    <app-loading></app-loading>
+    }
+    @placeholder {
+    <div
+      class="rounded-lg fondo_leyenda shadow-sm p-2 mt-5 xl:mx-5 xl:size-50 flex  items-center justify-center xl:w-250">
+      selecciona una localidad para empezar
+    </div>
+    }
+    <!-- bloque fijo de la calidad de aire del primer sitio de la lista que se devuelve con la posición automatica -->
+    @defer (when isPosition() == true){
+    <div class="rounded-lg fondo_leyenda shadow-sm p-2 mt-5 xl:mx-5">
+      @if (closestElement().length > 0) {
+      <h3 class="sm:text-2xl text-xl text-center border-b">En tu zona: {{firstPositionName()}}</h3>
+      }
+      @if (closestElement().length > 0) {
+      <div class="grid grid-cols-4">
+        @for(e of closestElement(); track e.name){
+        <div
+          class="transform transition-transform duration-300 ease-in-out hover:scale-150 active:scale-100 shadow-md hover:shadow-xl rounded-lg overflow-hidden rounded-lg shadow-sm p-2 m-2 fondo_card_measurement flex flex-col size-auto text-center">
+          <div>{{e.name}} - {{e.units}}</div>
+          <div>{{e.value}}</div>
+        </div>
+        }
+      </div>
+      } @else {
+      <p class="h-auto sm:h-32 flex justify-center items-center text-gray-200">No se encontraron sensores cerca
+        de tu ubicación</p>
+      }
+    </div>
+    }
+    @loading (minimum 1s){
+    <app-loading></app-loading>
+    }
+    @placeholder {
+    <div
+      class="rounded-lg shadow-sm p-2 mt-5 xl:m-5 fondo_card_measurement flex flex-col size-auto text-center text-gray-200">
+      selecciona sensores mas cercanos para empezar
+    </div>
+    }
+  </div>
+</div>

@@ -1,0 +1,113 @@
+@use '@angular/material' as mat;
+@use 'tailwindcss';
+
+@import url('https://fonts.googleapis.com/css2?family=Bitcount:wght@100..900&display=swap');
+
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.bitcount-title {
+  font-family: "Bitcount", system-ui !important;
+  font-weight: 2 !important;
+  font-style: normal !important;
+  font-variation-settings:
+    "slnt" 0,
+    "CRSV" 0.5,
+    "ELSH" 0,
+    "ELXP" 0;
+}
+
+// Tema claro
+.light-theme {
+  @include mat.theme((color: (primary: mat.$cyan-palette,
+        tertiary: mat.$orange-palette,
+        theme-type: light,
+      ),
+      typography: (brand-family: 'Roboto',
+      ),
+      density: 0,
+    ));
+  background-color: white;
+  color: black;
+
+  .fondo_leyenda {
+    background-color: lightgray;
+  }
+
+  .section {
+    background-color: rgb(199, 200, 201)
+  }
+
+  .dashboard-cards-theme {
+    background-color: #cfd7e1;
+  }
+
+  .fondo_card_measurement {
+    background-color: #cfd7e1;
+  }
+
+  .apexcharts-toolbar .apexcharts-download-icon {
+    background-color: white;
+    /* verde */
+    color: black;
+    border-radius: 5px;
+    padding: 5px;
+  }
+}
+
+// Tema oscuro
+.dark-theme {
+  @include mat.theme((color: (primary: mat.$cyan-palette,
+        tertiary: mat.$orange-palette,
+        theme-type: dark,
+      ),
+      typography: (brand-family: 'Roboto',
+      ),
+      density: 0,
+    ));
+  background-color: black;
+  color: white;
+
+  .fondo_leyenda {
+    background-color: #333;
+  }
+
+  .section {
+    background-color: rgb(20, 21, 24)
+  }
+
+  .dashboard-cards-theme {
+    background-color: #334155;
+  }
+
+  .fondo_card_measurement {
+    background-color: #334155;
+  }
+
+  .apexcharts-toolbar .apexcharts-download-icon {
+    background-color: #4CAF50;
+    /* verde */
+    color: white;
+    border-radius: 5px;
+    padding: 5px;
+  }
+}
+
+// Estilos globales
+html,
+body {
+  height: 100%;
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  color-scheme: light dark;
+  overflow-x: hidden;
+}
