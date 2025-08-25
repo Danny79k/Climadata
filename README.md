@@ -97,6 +97,7 @@ src/
     "ngx-skeleton-loader": "^11.2.1",   #libreria de esqueleto de carga
     "rxjs": "~7.8.0",                   #para realizar peticiones http
     "tailwindcss": "^4.1.11",           #tailwind
+    "apexcharts": "^5.3.3",             #libreria de graficas
 ```
 
 ---
