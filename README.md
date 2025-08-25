@@ -32,8 +32,12 @@
 
 
 ## 📋 Descripción
-Aplicación frontend desarrollada en **Angular 20** para la visualización de datos de calidad del aire en tiempo real.  
+Aplicación frontend desarrollada en **Angular 20** y **NestJS** para la visualización de datos de calidad del aire en tiempo real.  
 Incluye gráficos, animaciones y gestión dinámica de sensores y mediciones.
+
+La aplicación proprociona informacion fiel sobre la calidad del aire basada en selección manual y/o en posición automática.
+
+La aplicación tiene como target de usuarios tanto profesionales como particulares que solo están interesados en obtener informacion sobre la calidad del aire en su zona o en cualquier otra que interese, la aplicación está diseñada para ser portable en 3 tamaños de pantalla, desktop, tablet y mobile, esto hace que su uso pueda ser cotidiano desde el movil en cualquier momento y con gra facilidad
 
 ---
 
