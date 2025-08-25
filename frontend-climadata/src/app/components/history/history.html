@@ -34,7 +34,7 @@
       </mat-select>
     </mat-form-field>
     <mat-form-field class="sm:w-96 sm:ml-5">
-      <mat-label>Start date</mat-label>
+      <mat-label>Fecha de inicio</mat-label>
       <input matInput [matDatepicker]="pickerStart" (dateChange)="onStartDateSelected($event)">
       <mat-hint>MM/DD/YYYY</mat-hint>
       <mat-datepicker-toggle matIconSuffix [for]="pickerStart"></mat-datepicker-toggle>
@@ -42,7 +42,7 @@
     </mat-form-field>
 
     <mat-form-field class="sm:w-96 sm:ml-5">
-      <mat-label>End date</mat-label>
+      <mat-label>Fecha de fin</mat-label>
       <input matInput [matDatepicker]="pickerEnd" (dateChange)="onEndDateSelected($event)">
       <mat-hint>MM/DD/YYYY</mat-hint>
       <mat-datepicker-toggle matIconSuffix [for]="pickerEnd"></mat-datepicker-toggle>

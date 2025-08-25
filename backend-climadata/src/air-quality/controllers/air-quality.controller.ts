@@ -22,9 +22,9 @@ export class AirQualityController {
   async getSensors(@Param('locationId') locationId: number) {
     return this.airQualityService.getSensors(locationId);
   }
-  @Get('chart-data/:id/:element/:date_from/:date_to')
-  async getChartData(@Param('id') id: number, @Param('element') element: string, @Param('date_from') date_from: string, @Param('date_to') date_to: string ) {
-    console.log(id, element, date_from, date_to);
-    return this.airQualityService.getChartData(id, element, date_from, date_to);
+  @Get('chart-data/:id/:sensorId/:date_from/:date_to')
+  async getChartData(@Param('id') id: number, @Param('sensorId') sensorId: string, @Param('date_from') date_from: string, @Param('date_to') date_to: string ) {
+    console.log(id, sensorId, date_from, date_to);
+    return this.airQualityService.getChartData(id, sensorId, date_from, date_to);
   }
 }

@@ -4,8 +4,7 @@ import { HttpService } from '@nestjs/axios';
 import { Model } from 'mongoose';
 import { Location } from '../schemas/location.schema';
 import { firstValueFrom } from 'rxjs';
-import { CLIENT_RENEG_LIMIT } from 'tls';
-import { get } from 'http';
+
 
 @Injectable()
 export class AirQualityService {
