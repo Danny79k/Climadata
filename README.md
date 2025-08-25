@@ -11,7 +11,7 @@
 
 ---
 
-## Screenshots
+## 📷 Screenshots
 
 | Panel principal Desktop | Panel principal Desktop (aside) |
 | --- | --- |
