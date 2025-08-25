@@ -1,4 +1,4 @@
-import { Component, ViewChild, signal, effect } from "@angular/core";
+import { Component, ViewChild, signal, effect, ChangeDetectionStrategy } from "@angular/core";
 import {
   ChartComponent,
   ApexAxisChartSeries,
@@ -7,12 +7,15 @@ import {
   ApexTitleSubtitle,
   NgApexchartsModule
 } from "ng-apexcharts";
-import { MatFormField, MatInput, MatLabel } from '@angular/material/input';
+import { MatFormField, MatHint, MatInput, MatInputModule, MatLabel } from '@angular/material/input';
 import { MatOption, MatSelect } from '@angular/material/select';
 import { FormsModule } from '@angular/forms';
 import { HttpClient } from "@angular/common/http";
 import { Loading } from "../../lotties/loading/loading";
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { provideNativeDateAdapter } from "@angular/material/core";
+import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 
 
 export type ChartOptions = {
@@ -45,9 +48,11 @@ export type ChartOptions = {
 @Component({
   selector: "app-history",
   standalone: true,
-  imports: [NgApexchartsModule, MatFormField, MatLabel, MatSelect, MatOption, FormsModule, Loading, MatInput, MatAutocompleteModule],
+  providers: [provideNativeDateAdapter()],
+  imports: [MatHint, MatDatepickerModule, NgApexchartsModule, MatFormField, MatLabel, MatSelect, MatOption, FormsModule, Loading, MatInput, MatInputModule, MatAutocompleteModule],
   templateUrl: "./history.html",
-  styleUrls: ["./history.scss"]
+  styleUrls: ["./history.scss"],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HistoryComponent {
 
@@ -57,7 +62,9 @@ export class HistoryComponent {
   public chartOptions: Partial<ChartOptions>;
 
   selectedId = signal<number | null>(null);
-  selectedElement = signal<string | null>(null);
+  selectedElement = signal<number | null>(null);
+  selectedDateFrom = signal<string | null>(null);
+  selectedDateTo = signal<string | null>(null);
   elemts = signal<any[]>([]);
   inputValue: any;
   filteredRes: any[] = [];
@@ -78,9 +85,11 @@ export class HistoryComponent {
   combinedEffect = effect(() => {
     const id = this.selectedId();
     const element = this.selectedElement();
+    const dateFrom = this.selectedDateFrom();
+    const dateTo = this.selectedDateTo();
 
     if (id !== null && element !== null) {
-      this.filterChartData(id, element);
+      this.filterChartData(id, element, dateFrom, dateTo);
     }
   });
 
@@ -156,8 +165,22 @@ export class HistoryComponent {
     console.log(this.selectedId());
     this.fetchSensors();
   }
-  onSelectedElement(name: string) {
+  onSelectedElement(name: number) {
     this.selectedElement.set(name);
+  }
+
+  onStartDateSelected(event: MatDatepickerInputEvent<Date>) {
+    if (event.value) {
+      this.selectedDateFrom.set(event.value.toISOString().split('T')[0]);
+      console.log('Start date:', this.selectedDateFrom());
+    }
+  }
+
+  onEndDateSelected(event: MatDatepickerInputEvent<Date>) {
+    if (event.value) {
+      this.selectedDateTo.set(event.value.toISOString().split('T')[0]);
+      console.log('End date:', this.selectedDateTo());
+    }
   }
 
   async fetchElements(selectedParams: string[]) {
@@ -204,12 +227,12 @@ export class HistoryComponent {
     });
   }
 
-  filterChartData(id: number, element: string) {
-    this.http.get<any[]>(`http://localhost:3000/air-quality/chart-data/${id}/${element}`).subscribe({
+  filterChartData(id: number, sensorId: number, dateFrom: string | null, dateTo: string | null) {
+    this.http.get<any[]>(`http://localhost:3000/air-quality/chart-data/${id}/${sensorId}/${dateFrom}/${dateTo}`).subscribe({
       next: (res) => {
         console.log('Chart data fetched:', res);
         this.chartOptions.series = [{
-          name: element,
+          name: "element",
           data: res.map(item => item.value)
         }];
         this.chartOptions.xaxis = {
@@ -220,3 +243,5 @@ export class HistoryComponent {
     });
   }
 }
+
+

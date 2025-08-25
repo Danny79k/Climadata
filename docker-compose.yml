@@ -7,6 +7,8 @@ services:
       - "27017:27017"
     volumes:
       - mongo_data:/data/db
+    networks:
+      - climanet
 
   backend:
     build:
@@ -23,6 +25,8 @@ services:
     volumes:
       - ./backend-climadata:/app
     command: npm run start
+    networks:
+      - climanet
 
   frontend:
     build:
@@ -37,6 +41,12 @@ services:
     volumes:
       - ./frontend-climadata:/app
     command: npm run start
+    networks:
+      - climanet
 
 volumes:
   mongo_data:
+
+networks:
+  climanet:
+    driver: bridge

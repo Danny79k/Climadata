@@ -209,25 +209,20 @@ export class AirQualityService {
     }
   }
 
-  async getChartData(id: number, sensorId: string) {
+  async getChartData(id: number, sensorId: string, date_from: string, date_to: string) {
     console.log('sensorId:', typeof sensorId, sensorId);
 
 
-    const historyCollection = this.locationModel.db.collection('history');
+    const recordsResponse = await firstValueFrom(this.http.get(`https://api.openaq.org/v3/sensors/${sensorId}/days?date_from=${date_from}&date_to=${date_to}`, { headers: { 'x-api-key': this.API_KEY } }))
 
-    const sensorIdNum = Number(sensorId)
-    // Busca los registros del sensorId
-    const records = await historyCollection.find({ sensorId: sensorIdNum }).toArray();
-    console.log('records', records);
+    if (!recordsResponse || !Array.isArray(recordsResponse.data?.results)) return [];
 
     // Arma los datos para el chart
-    const chartData = records.map(record => {
-      if (!record.measurement) return null; // protegerse
-      return {
-        value: record.measurement.value, // debe existir
-        datetime: record.measurement.datetime?.utc || record.measurement.datetime?.local,
-      };
-    }).filter(item => item !== null); 
+    const chartData = recordsResponse.data.results.map(record => ({
+      value: record.value,
+      datetime: record.period?.datetimeFrom?.utc || record.period?.datetimeFrom?.local
+    })).filter(item => item.value !== undefined);
+
 
     return chartData;
   }
