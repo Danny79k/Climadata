@@ -15,7 +15,7 @@
 
 | Panel principal Desktop | Panel principal Desktop (aside) |
 | --- | --- |
-| <img src="public/screenshots/panel-desktop.png" width="400"> | <img src="public/screenshots/panel-desktop-aside.png" width="400"> |
+| <img src="frontend-climadata/public/screenshots/panel-desktop.png" width="400"> | <img src="public/screenshots/panel-desktop-aside.png" width="400"> |
 
 | Panel principal móvil | Panel principal móvil (aside) |
 | --- | --- |
