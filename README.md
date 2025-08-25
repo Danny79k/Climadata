@@ -15,15 +15,15 @@
 
 | Panel principal Desktop | Panel principal Desktop (aside) |
 | --- | --- |
-| <img src="frontend-climadata/public/screenshots/panel-desktop.png" width="400"> | <img src="public/screenshots/panel-desktop-aside.png" width="400"> |
+| <img src="frontend-climadata/public/screenshots/panel-desktop.png" width="400"> | <img src="frontend-climadata/public/screenshots/panel-desktop-aside.png" width="400"> |
 
 | Panel principal móvil | Panel principal móvil (aside) |
 | --- | --- |
-| <img src="public/screenshots/panel-mobile.png" width="400"> | <img src="public/screenshots/panel-mobile-aside.png" width="400"> |
+| <img src="frontend-climadata/public/screenshots/panel-mobile.png" width="400"> | <img src="frontend-climadata/public/screenshots/panel-mobile-aside.png" width="400"> |
 
 | Login desktop | Login móvil |
 | --- | --- |
-| <img src="public/screenshots/login-desktop.png" width="400"> | <img src="public/screenshots/login-mobile.png" width="400"> |
+| <img src="frontend-climadata/public/screenshots/login-desktop.png" width="400"> | <img src="frontend-climadata/public/screenshots/login-mobile.png" width="400"> |
 
 
 
