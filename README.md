@@ -25,6 +25,10 @@
 | --- | --- |
 | <img src="frontend-climadata/public/screenshots/login-desktop.png" width="400"> | <img src="frontend-climadata/public/screenshots/login-mobile.png" width="400"> |
 
+| Gráfrico de linea Desktop dekstop | Gráfico de linea móvil |
+| -- | -- |
+| <img src="frontend-climadata/public/screenshots/graph-desktop.png" width="400"> | <img src="frontend-climadata/public/screenshots/graph-mobile.png" width="400"> |
+
 
 
 ## 📋 Descripción
